@@ -1,0 +1,44 @@
+{
+  "name": "reactplate",
+  "version": "1.0.0",
+  "description": "Boilerplate for react projects",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --progress --colors --hot --inline --historyApiFallback",
+    "eslint": "eslint components/Calendar.js || true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yankouskia/reactplate.git"
+  },
+  "keywords": [
+    "React",
+    "Router",
+    "Webpack",
+    "Babel"
+  ],
+  "author": "yankouskia aleksandr.yankovskiy@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yankouskia/reactplate/issues"
+  },
+  "homepage": "https://github.com/yankouskia/reactplate#readme",
+  "dependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "webpack": "^2.3.3",
+    "webpack-dev-server": "^2.4.2",
+    "eslint": "^3.9.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-loader": "^1.6.1",
+    "eslint-plugin-import": "^2.1.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.5.0"
+  }
+}
