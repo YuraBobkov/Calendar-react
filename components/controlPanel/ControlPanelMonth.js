@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import basicColors from '../data/styleData';
 import { months } from '../data/timeData';
 
@@ -33,10 +33,12 @@ const styles = {
 }
 
 const ControlPanelMonth = (props) => {
+    console.log(props)
     return (
         <div style = {styles.controlPanelMonth}>
 			<button style = {styles.controlButton}>&lt;</button>
-			<div style = {styles.monthDropdown}>{months[props.currentMonth]} {props.currentYear}</div>
+			<div style = {styles.monthDropdown}>
+                {months[props.currentMonth]} {props.currentYear}</div>
 			<button style = {styles.controlButton}>&gt;</button>
 		</div>
     )

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ControlPanelMonth from './ControlPanelMonth';
 import basicColors from '../data/styleData';
 
@@ -11,6 +11,7 @@ const styles = {
 }
 
 const ControlPanel = (props) => {
+    console.log(props)
     return (
         <div style = {styles.control}>
             <ControlPanelMonth
@@ -20,6 +21,5 @@ const ControlPanel = (props) => {
         </div>
     )
 }
-
 
 export default ControlPanel;
