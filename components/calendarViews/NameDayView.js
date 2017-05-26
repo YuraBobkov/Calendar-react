@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import basicColors from '../data/styleData';
 import { days } from '../data/timeData';
 
+const NameDayView = (props) => {
+	let style = Object.assign({}, styles.basic, (props.day === 6) ? styles.rightDay : {});
+	return (
+		<div style = {style}>
+			{days[props.day]}
+		</div>
+	)
+}
+
 const styles = {
 	basic: {
 		background: 'transparent',
@@ -21,16 +30,11 @@ const styles = {
     
 	holiday: {
 		color: basicColors.holidayColor
-	}	
-}
-
-const NameDayView = (props) => {
-	let style = Object.assign({}, styles.basic, (props.day === 0) ? styles.holiday : {})
-	return (
-		<div style = {style}>
-			{days[props.day]}
-		</div>
-	)
+	},
+    
+    rightDay: {
+        borderRight: '1px solid ' + basicColors.mainColor
+    }
 }
 
 export default NameDayView;

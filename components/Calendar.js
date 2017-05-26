@@ -16,15 +16,15 @@ class Calendar extends Component {
 
 	render() {
 		return (
-			<div style = {styles}>
+			<div style = {styles}> 
                 <ControlPanel
-                currentYear = {this.state.currentDate.getFullYear()}
-                currentMonth = {this.state.currentDate.getMonth()}
+                    currentYear = {this.state.currentDate.getFullYear()}
+                    currentMonth = {this.state.currentDate.getMonth()}
                 />
-                <CalendarView
-                    currentDate = {this.state.currentDate}
+                <CalendarView 
+					currentDate = {this.state.currentDate} 
                 />
-			</div>
+            </div>
 		)
 	}
 }
