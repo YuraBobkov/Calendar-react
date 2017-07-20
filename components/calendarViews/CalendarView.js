@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import NameDayView from './NameDayView';
 import DayView from './DayView';
 
@@ -83,7 +83,7 @@ const createNextMonthDates = (currentMonthLastDate) => {
 const styles = {
 	nameDay: {
 		display: 'block',
-		marginBottom: '10px'
+		marginBottom: '-5px'
 	}
 }
                        

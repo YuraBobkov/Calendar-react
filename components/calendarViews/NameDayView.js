@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import basicColors from '../data/styleData';
 import { days } from '../data/timeData';
 
