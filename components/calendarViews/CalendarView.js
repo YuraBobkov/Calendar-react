@@ -12,7 +12,7 @@ const CalendarView = (props) => {
 	const prevMonthLastDate = new Date(currentYear, currentMonth, 0); //Sun Apr 30 2017 00:00:00
 	
 	const prevMonthLastDates = createPrevMonthDates(currentMonthFirstDate, prevMonthLastDate);
-	const currentMonthDates = createCurrentMonthDates();
+	const currentMonthDates = createCurrentMonthDates(props.currentDate);
 	const nextMontFirstDates = createNextMonthDates(currentMonthLastDate);
     const dayViews = prevMonthLastDates.concat(currentMonthDates).concat(nextMontFirstDates);
 
@@ -53,12 +53,12 @@ const createPrevMonthDates = (currentMonthFirstDate, prevMonthLastDate) => {
 	return daysSet;
 }
 
-const createCurrentMonthDates = () => {
+const createCurrentMonthDates = (currentDate) => {
 	let today = new Date();
-	let dayCount = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+	let dayCount = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
 	let daysSet = [];
 	for (let date = 1; date <= dayCount; date++) {
-		let dateObject = new Date(today.getFullYear(), today.getMonth(), date);
+		let dateObject = new Date(currentDate.getFullYear(), currentDate.getMonth(), date);
 		daysSet.push(<DayView 
 			key = {'thisMonth-' + date} 
 			date = {dateObject} 

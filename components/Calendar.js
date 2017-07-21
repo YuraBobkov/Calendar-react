@@ -16,7 +16,48 @@ class Calendar extends Component {
         this.getNextMonth = this.getNextMonth.bind(this);
         this.getToday = this.getToday.bind(this);
     }
-
+    
+    componentDidMount() {
+        let getEvents = () => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://128.199.53.150/events');
+            xhr.send();
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        this.setState({
+                            events: JSON.parse(xhr.responseText)
+                        });
+                        console.log('events: ', this.state.events)
+                    } else {
+                        console.log(xhr.status + ': ' + xhr.statusText)
+                    }
+                }
+            }
+        }
+        
+        let getTrainers = () => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://128.199.53.150/trainers');
+            xhr.send();
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        this.setState({
+                            trainers: JSON.parse(xhr.responseText)
+                        });
+                        console.log('trainers: ', this.state.trainers)
+                    } else {
+                        console.log(xhr.status + ': ' + xhr.statusText)
+                    }
+                }
+            }
+        }
+        
+        getEvents();
+        getTrainers();
+    }
+    
 	getPrevMonth() {
         console.log(this.state)
 		let currentMonth = (this.state.currentDate.getMonth() > 0) ? this.state.currentDate.getMonth() - 1 : 11;
@@ -58,4 +99,4 @@ export default Calendar;
 
 //https://medium.com/@pshrmn/a-simple-react-router-v4-tutorial-7f23ff27adf
 
-// вынести currentDate из state?
+
