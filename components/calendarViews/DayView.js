@@ -10,8 +10,12 @@ const DayView = (props) => {
 		(props.today) ? styles.today : {}
 	)
 
-    let getDeadlines = () => {
-         if (!props.disabled && props.deadlines.length > 0) {
+                                    
+                               
+                               
+                               
+     let getDeadlines = () => {
+        if (!props.disabled && props.deadlines.length > 0) {
             let deadlinesSet = [];
             props.deadlines.map((item,i) => {
                  if (item.start.toString().slice(0,15) === props.date.toString().slice(0,15)) {
@@ -68,8 +72,10 @@ const DayView = (props) => {
             })
             return webinarsSet;
         }
-    } 
+    }                           
                                
+                               
+                  
                                
 	return (
 		<div style = {style}>
@@ -93,6 +99,7 @@ const DayView = (props) => {
                     {getWebinars()}
                 </div>  
             </div>   
+                       
 
 		</div>
 	)

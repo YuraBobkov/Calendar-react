@@ -1,42 +1,29 @@
 import React from 'react';
-import NameDayView from './NameDayView';
 import DayView from './DayView';
+import { Link } from 'react-router-dom';
 
 const CalendarView = (props) => {
 	const currentYear = props.currentDate.getFullYear();
 	const currentMonth = props.currentDate.getMonth();
 	const currentDay = props.currentDate.getDay();
     
-	const currentMonthFirstDate = new Date(currentYear, currentMonth, 1); // Mon May 01 2017 
-	const currentMonthLastDate = new Date(currentYear, currentMonth + 1, 0); // Wed May 31 2017 00:00:00 
-	const prevMonthLastDate = new Date(currentYear, currentMonth, 0); //Sun Apr 30 2017 00:00:00
+	const currentMonthFirstDate = new Date(currentYear, currentMonth, 1); 
+	const currentMonthLastDate = new Date(currentYear, currentMonth + 1, 0); 
+	const prevMonthLastDate = new Date(currentYear, currentMonth, 0); 
 	
 	const prevMonthLastDates = createPrevMonthDates(currentMonthFirstDate, prevMonthLastDate);
-	const currentMonthDates = createCurrentMonthDates(props.currentDate, props.event, props.events, props.lectures, props.webinars, props.workshops, props.deadlines);
+	const currentMonthDates = createCurrentMonthDates(props.currentDate, props.events, props.lectures, props.webinars, props.workshops, props.deadlines);
 	const nextMontFirstDates = createNextMonthDates(currentMonthLastDate);
     const dayViews = prevMonthLastDates.concat(currentMonthDates).concat(nextMontFirstDates);
 //console.log(props.event)
 	return (
-        <div>
-            <div style = {styles.nameDay}>
-                {nameDayViews}
-            </div>
             <div style = {styles.nameDay}>
                 {dayViews}
             </div>
-        </div>
 	)
 }
 
-const createNameDay = () => {
-    let daysSet = [];
-    for (let day = 0; day < 7; day++) {
-		daysSet.push(<NameDayView key = {'header-' + day} day = {day} />)
-	}
-    return daysSet;
-}
-                     
-let nameDayViews = createNameDay();
+
 	
 const createPrevMonthDates = (currentMonthFirstDate, prevMonthLastDate) => {
 	let currentMonthFirstDay = currentMonthFirstDate.getDay(); //1
@@ -53,7 +40,7 @@ const createPrevMonthDates = (currentMonthFirstDate, prevMonthLastDate) => {
 	return daysSet;
 }
 
-const createCurrentMonthDates = (currentDate, event, events, lectures, webinars, workshops, deadlines) => {
+const createCurrentMonthDates = (currentDate, events, lectures, webinars, workshops, deadlines) => {
 	let today = new Date();
 	let dayCount = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
 	let daysSet = [];
@@ -63,7 +50,6 @@ const createCurrentMonthDates = (currentDate, event, events, lectures, webinars,
 			key = {'thisMonth-' + date} 
 			date = {dateObject} 
 			today = {dateObject.toDateString() == today.toDateString()}
-            event = {event}
             events = {events}
             lectures = {lectures}
             webinars = {webinars}

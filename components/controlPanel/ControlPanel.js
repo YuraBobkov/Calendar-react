@@ -31,11 +31,16 @@ const styles = {
 
 
 const ControlPanel = (props) => {
+    
+    
+    
 	return (
 		<div style = {styles.control}>
             <div style = {styles.links}>
+        
                 <button type = "button" style = {styles.getToday}><Link to="/">Month</Link></button>
                 <button type = "button" style = {styles.getToday}><Link to="/week">Week</Link></button>
+        
             </div>
             <button type = "button" style = {styles.getToday} onClick = {props.getToday} >Get Today</button>
 			<ControlPanelMonth

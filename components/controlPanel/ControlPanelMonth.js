@@ -1,6 +1,7 @@
 import React from 'react';
 import basicColors from '../data/styleData';
 import { months } from '../data/timeData';
+import { Link } from 'react-router-dom';
 
 const styles = {
     controlPanelMonth: {
@@ -33,7 +34,6 @@ const styles = {
 }
 
 const ControlPanelMonth = (props) => {
-//    console.log(props)
     return (
 		<div style = {styles.controlPanelMonth}>
 			<button style = {styles.controlButton} onClick = {props.getPrevMonth}>&lt;</button>

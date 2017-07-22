@@ -2,10 +2,18 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ControlPanel from './controlPanel/ControlPanel';
 import CalendarView from './calendarViews/CalendarView';
+import CalendarWeek from './calendarViews/CalendarWeek';
+import NameDayView from './calendarViews/NameDayView';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 const styles = {
+    common: {
     fontFamily: 'Courier New'
+    }, 
+    nameDay: {
+		display: 'block',
+		marginBottom: '-5px'
+	}
 }
 
 class Calendar extends Component {
@@ -18,12 +26,14 @@ class Calendar extends Component {
             webinars: [],
             workshops: [],
             deadlines: [],
-            event: [],
-            trainers: []
+            trainers: [],
+            flag: true
         }
         this.getPrevMonth = this.getPrevMonth.bind(this);
         this.getNextMonth = this.getNextMonth.bind(this);
         this.getToday = this.getToday.bind(this);
+        this.toggleFlag = this.toggleFlag.bind(this);
+        this.toggleFlag2 = this.toggleFlag2.bind(this);
     }
     
     componentDidMount() { // componentDidMount
@@ -75,23 +85,6 @@ class Calendar extends Component {
             }
         }
         
-        let getEvent = () => {
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', 'http://128.199.53.150/events/5915cd1589e1e8ac13de8550');
-            xhr.send();
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        this.setState({
-                            event: JSON.parse(xhr.responseText)
-                        });
-//                        console.log('event: ', this.state.event)
-                    } else {
-                        alert(xhr.status + ': ' + xhr.statusText)
-                    }
-                }
-            }
-        }
         
         let getTrainers = () => {
             let xhr = new XMLHttpRequest();
@@ -103,7 +96,6 @@ class Calendar extends Component {
                         this.setState({
                             trainers: JSON.parse(xhr.responseText)
                         });
-//                        console.log('trainers: ', this.state.trainers)
                     } else {
                         alert(xhr.status + ': ' + xhr.statusText)
                     }
@@ -112,79 +104,116 @@ class Calendar extends Component {
         }
         
         getEvents();
-        getEvent();
         getTrainers();
     }
     
 	getPrevMonth() {
-//        console.log(this.state)
-		let currentMonth = (this.state.currentDate.getMonth() > 0) ? this.state.currentDate.getMonth() - 1 : 11;
-		let currentYear = (currentMonth === 11) ? this.state.currentDate.getFullYear() - 1 : this.state.currentDate.getFullYear();
-		this.setState({currentDate: new Date(currentYear, currentMonth)});
+        if (this.state.flag == true) {
+            let currentMonth = (this.state.currentDate.getMonth() > 0) ? this.state.currentDate.getMonth() - 1 : 11;
+            let currentYear = (currentMonth === 11) ? this.state.currentDate.getFullYear() - 1 : this.state.currentDate.getFullYear();
+            this.setState({currentDate: new Date(currentYear, currentMonth)});
+        }
 	}
 
 	getNextMonth() {
-		let currentMonth = (this.state.currentDate.getMonth() < 11) ? this.state.currentDate.getMonth() + 1 : 0;
-		let currentYear = (currentMonth === 0) ? this.state.currentDate.getFullYear() + 1 : this.state.currentDate.getFullYear();
-		this.setState({currentDate: new Date(currentYear, currentMonth)});
+        if (this.state.flag == true) {
+            let currentMonth = (this.state.currentDate.getMonth() < 11) ? this.state.currentDate.getMonth() + 1 : 0;
+            let currentYear = (currentMonth === 0) ? this.state.currentDate.getFullYear() + 1 : this.state.currentDate.getFullYear();
+            this.setState({currentDate: new Date(currentYear, currentMonth)});
+        }
 	}
     
     getToday() {
         this.setState({currentDate: new Date()});
     }
     
+    toggleFlag() {
+        this.setState({ flag: false });
+    }
+    
+    toggleFlag2() {
+        this.setState({ flag: true });
+    }
+    
 	render() {
-//        console.log(this.state.events)
+//        console.log(this.state.currentDate)
         
 		return (
             <Router>
-                <div style = {styles}>
+                <div style = {styles.common}>
                     <ControlPanel 
                         currentYear = {this.state.currentDate.getFullYear()}
                         currentMonth = {this.state.currentDate.getMonth()}
                         getPrevMonth = {this.getPrevMonth}
                         getNextMonth = {this.getNextMonth}
                         getToday = {this.getToday}  
+                        toggleFlag = {this.toggleFlag}  
+                        toggleFlag2 = {this.toggleFlag2}  
                     />
-                    <Route exact path="/" component={() =>
+                    <div style = {styles.nameDay}>
+                        {nameDayViews}
+                    </div>
+                    <Route exact path="/" component = {() => 
                         <CalendarView 
                             currentDate = {this.state.currentDate}
-                            event = {this.state.event} 
                             events = {this.state.events} 
                             lectures = {this.state.lectures}
                             webinars = {this.state.webinars}
                             workshops = {this.state.workshops}
                             deadlines = {this.state.deadlines}
-/>
+                        />
                     }/>
-                    <Route path="/week" component={Home}/>  
+                    <Route path="/week" component={() => 
+                    <CalendarWeek
+                        currentDate = {this.state.currentDate}
+                        events = {this.state.events} 
+                        lectures = {this.state.lectures}
+                        webinars = {this.state.webinars}
+                        workshops = {this.state.workshops}
+                        deadlines = {this.state.deadlines}
+                    
+                    />  
+                }/>
                 </div>
             </Router>
 		)
 	}
 }
 
-const MyProductPage = (props) => {
-      return (
-        <ControlPanel 
-          currentYear={this.toggleSidebarOn.bind(this)}
-          {...props}
-        />
-      );
-    }
-    
+
+
+const createNameDay = () => {
+    let daysSet = [];
+    for (let day = 0; day < 7; day++) {
+		daysSet.push(<NameDayView key = {'header-' + day} day = {day} />)
+	}
+    return daysSet;
+}
+                     
+let nameDayViews = createNameDay();
+
+
 
 
 
 const Home = () => (
   <div>
-    <h2>Week Calendar</h2>
+    <h2>Home</h2>
   </div>
 );
 
+
+
+
 ReactDOM.render(
-      <Calendar />, 
-    document.querySelector('#app'));
+    <Calendar/>, 
+            document.querySelector('#app'));
+
+
+
+
+
+
 
 //https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/import
 
