@@ -33,7 +33,7 @@ const styles = {
 }
 
 const ControlPanelMonth = (props) => {
-    console.log(props)
+//    console.log(props)
     return (
 		<div style = {styles.controlPanelMonth}>
 			<button style = {styles.controlButton} onClick = {props.getPrevMonth}>&lt;</button>

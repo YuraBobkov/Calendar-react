@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        app: ['./index.js']
+        app: ['./components/Calendar.js']
     },
     output: { path: __dirname, filename: 'bundle.js' },
     module: {

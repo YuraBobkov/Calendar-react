@@ -12,10 +12,10 @@ const CalendarView = (props) => {
 	const prevMonthLastDate = new Date(currentYear, currentMonth, 0); //Sun Apr 30 2017 00:00:00
 	
 	const prevMonthLastDates = createPrevMonthDates(currentMonthFirstDate, prevMonthLastDate);
-	const currentMonthDates = createCurrentMonthDates(props.currentDate);
+	const currentMonthDates = createCurrentMonthDates(props.currentDate, props.event, props.events, props.lectures, props.webinars, props.workshops, props.deadlines);
 	const nextMontFirstDates = createNextMonthDates(currentMonthLastDate);
     const dayViews = prevMonthLastDates.concat(currentMonthDates).concat(nextMontFirstDates);
-
+//console.log(props.event)
 	return (
         <div>
             <div style = {styles.nameDay}>
@@ -53,7 +53,7 @@ const createPrevMonthDates = (currentMonthFirstDate, prevMonthLastDate) => {
 	return daysSet;
 }
 
-const createCurrentMonthDates = (currentDate) => {
+const createCurrentMonthDates = (currentDate, event, events, lectures, webinars, workshops, deadlines) => {
 	let today = new Date();
 	let dayCount = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
 	let daysSet = [];
@@ -63,6 +63,12 @@ const createCurrentMonthDates = (currentDate) => {
 			key = {'thisMonth-' + date} 
 			date = {dateObject} 
 			today = {dateObject.toDateString() == today.toDateString()}
+            event = {event}
+            events = {events}
+            lectures = {lectures}
+            webinars = {webinars}
+            workshops = {workshops}
+            deadlines = {deadlines}
         />)
 	}
 	return daysSet;
