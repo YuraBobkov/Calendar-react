@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import ControlPanel from './controlPanel/ControlPanel';
 import CalendarView from './calendarViews/CalendarView';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 const styles = {
     fontFamily: 'Courier New'
@@ -77,26 +79,56 @@ class Calendar extends Component {
     
 	render() {
 		return (
-			<div style = {styles}> 
-                <ControlPanel
-                    currentYear = {this.state.currentDate.getFullYear()}
-                    currentMonth = {this.state.currentDate.getMonth()}
-                    getPrevMonth = {this.getPrevMonth}
-                    getNextMonth = {this.getNextMonth}
-                    getToday = {this.getToday}
-                />
-                <CalendarView 
-					currentDate = {this.state.currentDate} 
-                />
-            </div>
+            <Router>
+                <div style = {styles}>
+                    <ControlPanel 
+                        currentYear = {this.state.currentDate.getFullYear()}
+                        currentMonth = {this.state.currentDate.getMonth()}
+                        getPrevMonth = {this.getPrevMonth}
+                        getNextMonth = {this.getNextMonth}
+                        getToday = {this.getToday}  
+                    />
+                    <Route exact path="/" component={() =>
+                        <CalendarView currentDate = {this.state.currentDate}/>
+                    }/>
+                    <Route path="/week" component={Home}/>  
+                </div>
+            </Router>
 		)
 	}
 }
 
-export default Calendar;
+const MyProductPage = (props) => {
+      return (
+        <ControlPanel 
+          currentYear={this.toggleSidebarOn.bind(this)}
+          {...props}
+        />
+      );
+    }
+    
+
+
+
+const Home = () => (
+  <div>
+    <h2>Week Calendar</h2>
+  </div>
+);
+
+ReactDOM.render(
+      <Calendar />, 
+    document.querySelector('#app'));
 
 //https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/import
 
 //https://medium.com/@pshrmn/a-simple-react-router-v4-tutorial-7f23ff27adf
 
+//router: https://www.youtube.com/watch?v=_Fzl0Cim6F8&list=WL&index=60&t=6s
+//https://www.youtube.com/watch?v=niCzY8xYIpc&list=WL&index=59&t=1030s
+//https://www.youtube.com/watch?v=YCJo54pxgtI&list=WL&index=57&t=907s
+//https://medium.com/@pshrmn/a-simple-react-router-v4-tutorial-7f23ff27adf
+//https://www.youtube.com/watch?v=eofpZPRUnP8
 
+
+//добавить логику, если введен неверный путь по ссылке (скринкасты)

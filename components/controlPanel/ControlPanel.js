@@ -1,6 +1,7 @@
 import React from 'react';
 import ControlPanelMonth from './ControlPanelMonth';
 import basicColors from '../data/styleData';
+import { Link } from 'react-router-dom';
 
 const styles = {
 	control: {
@@ -17,13 +18,25 @@ const styles = {
 		display: 'inline-block',
 		marginRight: '30px',
 		padding: '10px 15px'
-	}
+	},
+    
+    links: {
+        display: 'inline-block',
+        marginRight: '30px',
+        padding: '10px 15px',
+        listStyleType: 'none',
+        float: 'left'
+    }
 }
 
 
 const ControlPanel = (props) => {
 	return (
 		<div style = {styles.control}>
+            <div style = {styles.links}>
+                <button type = "button" style = {styles.getToday}><Link to="/">Month</Link></button>
+                <button type = "button" style = {styles.getToday}><Link to="/week">Week</Link></button>
+            </div>
             <button type = "button" style = {styles.getToday} onClick = {props.getToday} >Get Today</button>
 			<ControlPanelMonth
 				currentYear = {props.currentYear}
