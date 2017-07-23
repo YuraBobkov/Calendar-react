@@ -38,8 +38,8 @@ const ControlPanel = (props) => {
 		<div style = {styles.control}>
             <div style = {styles.links}>
         
-                <button type = "button" style = {styles.getToday}><Link to="/">Month</Link></button>
-                <button type = "button" style = {styles.getToday}><Link to="/week">Week</Link></button>
+                <button type = "button" style = {styles.getToday} onClick={props.toggleFlag2}><Link to="/">Month</Link></button>
+                <button type = "button" style = {styles.getToday} onClick={props.toggleFlag}><Link to="/week">Week</Link></button>
         
             </div>
             <button type = "button" style = {styles.getToday} onClick = {props.getToday} >Get Today</button>

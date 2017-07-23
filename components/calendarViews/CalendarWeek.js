@@ -13,7 +13,7 @@ const CalendarWeek = (props) => {
     
     const currentWeekNumber = getWeekNumber(props.currentDate);
     const firstDayOfCurrentWeek = getFirstDayOfCurrentWeek(currentWeekNumber, currentYear);
-    console.log(firstDayOfCurrentWeek)
+//    console.log(firstDayOfCurrentWeek)
     
     const CurrentWeekDays = createCurrentWeekDays(firstDayOfCurrentWeek, props.events, props.lectures, props.webinars, props.workshops, props.deadlines);
     

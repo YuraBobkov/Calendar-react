@@ -1,110 +1,121 @@
-import React from 'react';
+import React, { Component } from 'react';
 import basicColors from '../data/styleData';
-import { Link } from 'react-router-dom';
+import Review from './Review';
+//import { Link } from 'react-router-dom';
 
-const DayView = (props) => {
-	let style = Object.assign(
-        {}, 
-		styles.common, 
-		(props.disabled) ? styles.disabled : styles.real, 
-		(props.today) ? styles.today : {}
-	)
-
-                                    
-                               
-                               
-                               
-     let getDeadlines = () => {
-        if (!props.disabled && props.deadlines.length > 0) {
+class DayView extends Component {
+    constructor(props) {
+		super(props);
+        this.state = {
+			show: false
+		}
+        this.toggleThisShow = this.toggleThisShow.bind(this);
+    }
+    
+    toggleThisShow() {
+        this.setState({show: !this.state.show});
+    }
+    
+    getDeadlines () {
+        if (!this.props.disabled && this.props.deadlines.length > 0) {
             let deadlinesSet = [];
-            props.deadlines.map((item,i) => {
-                 if (item.start.toString().slice(0,15) === props.date.toString().slice(0,15)) {
-                     deadlinesSet.push(<Link to="/week" key={item.id}> {item.title} {item.type}</Link>);
+            this.props.deadlines.map((item,i) => {
+                 if (item.start.toString().slice(0,15) === this.props.date.toString().slice(0,15)) {
+                     deadlinesSet.push(<p key={item.id} onClick={this.toggleThisShow}> {item.title} {item.type}</p>);
                  }
             })
             return deadlinesSet;
         }
     }
                                 
-    let getEvents = () => {
-         if (!props.disabled && props.events.length > 0) {
+    getEvents () {
+         if (!this.props.disabled && this.props.events.length > 0) {
             let eventsSet = [];
-            props.events.map((item,i) => {
-                 if (item.start.toString().slice(0,15) === props.date.toString().slice(0,15)) {
-                     eventsSet.push(<Link to="/week" key={item.id}> {item.title} {item.type}</Link>);
+            this.props.events.map((item,i) => {
+                 if (item.start.toString().slice(0,15) === this.props.date.toString().slice(0,15)) {
+                     eventsSet.push(<p key={item.id} onClick={this.toggleThisShow}> {item.title} {item.type}</p>);
                  }
             })
             return eventsSet;
         }
     }
                                 
-    let getLectures = () => {
-         if (!props.disabled && props.deadlines.length > 0) {
+    getLectures() {
+         if (!this.props.disabled && this.props.deadlines.length > 0) {
             let lecturesSet = [];
-            props.lectures.map((item,i) => {
-                 if (item.start.toString().slice(0,15) === props.date.toString().slice(0,15)) {
-                     lecturesSet.push(<Link to="/week" key={item.id}> {item.title} {item.type}</Link>);
+            this.props.lectures.map((item,i) => {
+                 if (item.start.toString().slice(0,15) === this.props.date.toString().slice(0,15)) {
+                     lecturesSet.push(<p key={item.id} onClick={this.toggleThisShow}> {item.title} {item.type}</p>);
                  }
             })
             return lecturesSet;
         }
     }                         
                 
-    let getWorkshops = () => {
-         if (!props.disabled && props.deadlines.length > 0) {
+    getWorkshops () {
+         if (!this.props.disabled && this.props.deadlines.length > 0) {
             let workshopsSet = [];
-            props.workshops.map((item,i) => {
-                 if (item.start.toString().slice(0,15) === props.date.toString().slice(0,15)) {
-                     workshopsSet.push(<Link to="/week" key={item.id}> {item.title} {item.type}</Link>);
+            this.props.workshops.map((item,i) => {
+                 if (item.start.toString().slice(0,15) === this.props.date.toString().slice(0,15)) {
+                     workshopsSet.push(<p key={item.id} onClick={this.toggleThisShow}> {item.title} {item.type}</p>);
                  }
             })
             return workshopsSet;
         }
     }  
     
-    let getWebinars = () => {
-         if (!props.disabled && props.deadlines.length > 0) {
+     getWebinars () {
+         if (!this.props.disabled && this.props.deadlines.length > 0) {
             let webinarsSet = [];
-            props.webinars.map((item,i) => {
-                 if (item.start.toString().slice(0,15) === props.date.toString().slice(0,15)) {
-                     webinarsSet.push(<Link to="/week" key={item.id}> {item.title} {item.type}</Link>);
+            this.props.webinars.map((item,i) => {
+                 if (item.start.toString().slice(0,15) === this.props.date.toString().slice(0,15)) {
+                     webinarsSet.push(<p key={item.id} onClick={this.toggleThisShow}> {item.title} {item.type}</p>);
                  }
             })
             return webinarsSet;
         }
+                
     }                           
-                               
-                               
-                  
-                               
-	return (
-		<div style = {style}>
-			<div style = {styles.content}>
-				{props.date.getDate()}
-			</div>
-             <div style = {styles.contentContainer}>   
-                <div style = {styles.contentEvents}> 
-                    {getEvents()}
-                </div>    
-                <div style = {styles.contentDeadlines}> 
-                    {getDeadlines()}
+              
+    render() {   
+        let style = Object.assign(
+            {}, 
+            styles.common, 
+            (this.props.disabled) ? styles.disabled : styles.real, 
+            (this.props.today) ? styles.today : {}
+	   )           
+        return (
+            <div style = {style} >
+                <div style = {styles.content} >
+                    {this.props.date.getDate()}
                 </div>
-                <div style = {styles.contentLectures}> 
-                    {getLectures()}
-                </div>
-                <div style = {styles.contentWorkshops}> 
-                    {getWorkshops()}
-                </div>
-                <div style = {styles.contentWebinars}> 
-                    {getWebinars()}
-                </div>  
-            </div>   
-                       
-
-		</div>
-	)
+                 <div style = {styles.contentContainer}>   
+                    <div style = {styles.contentEvents}> 
+                        {this.getEvents()}
+                    </div>    
+                    <div style = {styles.contentDeadlines}> 
+                        {this.getDeadlines()}
+                    </div>
+                    <div style = {styles.contentLectures}> 
+                        {this.getLectures()}
+                    </div>
+                    <div style = {styles.contentWorkshops}> 
+                        {this.getWorkshops()}
+                    </div>
+                    <div style = {styles.contentWebinars}> 
+                        {this.getWebinars()}
+                    </div>  
+                </div> 
+                <Review 
+                    show={this.state.show} 
+                    toggleThisShow={this.toggleThisShow}
+                />
+            </div>
+        )
+    }
 }
 
+             
 const styles = {
 	common: {
         display: 'flex',
@@ -170,4 +181,7 @@ const styles = {
     }, 
 }
 
+
+ 
+    
 export default DayView;

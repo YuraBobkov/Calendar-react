@@ -113,6 +113,12 @@ class Calendar extends Component {
             let currentYear = (currentMonth === 11) ? this.state.currentDate.getFullYear() - 1 : this.state.currentDate.getFullYear();
             this.setState({currentDate: new Date(currentYear, currentMonth)});
         }
+        if (this.state.flag == false) {
+            let currentDateMinusWeek = this.state.currentDate;
+            currentDateMinusWeek.setDate(this.state.currentDate.getDate() - 7);
+            this.setState({currentDate: currentDateMinusWeek}); 
+        }
+        
 	}
 
 	getNextMonth() {
@@ -120,6 +126,11 @@ class Calendar extends Component {
             let currentMonth = (this.state.currentDate.getMonth() < 11) ? this.state.currentDate.getMonth() + 1 : 0;
             let currentYear = (currentMonth === 0) ? this.state.currentDate.getFullYear() + 1 : this.state.currentDate.getFullYear();
             this.setState({currentDate: new Date(currentYear, currentMonth)});
+        }
+        if (this.state.flag == false) {
+            let currentDatePlusWeek = this.state.currentDate;
+            currentDatePlusWeek.setDate(this.state.currentDate.getDate() + 7);
+            this.setState({currentDate: currentDatePlusWeek});    
         }
 	}
     
@@ -129,11 +140,13 @@ class Calendar extends Component {
     
     toggleFlag() {
         this.setState({ flag: false });
+        console.log('this.state.currentDate : ' + this.state.currentDate)
     }
     
     toggleFlag2() {
-        this.setState({ flag: true });
+        this.setState({ flag: true });     
     }
+    
     
 	render() {
 //        console.log(this.state.currentDate)
