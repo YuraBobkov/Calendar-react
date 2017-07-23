@@ -2,54 +2,6 @@ import React, { Component } from 'react';
 import basicColors from '../data/styleData';
 import { months } from '../data/timeData';
 
-class Review extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			selectedMonth: props.currentMonth,
-			selectedYear: props.currentYear
-		}
-
-//		this.onMonthChange = this.onMonthChange.bind(this);
-//		this.onYearChange = this.onYearChange.bind(this);
-		this.goToMonth = this.goToMonth.bind(this);
-	}
-
-//	onMonthChange(event) {
-//		this.setState({selectedMonth: parseInt(event.target.value)});
-//	}
-//
-//	onYearChange(event) {
-//		this.setState({selectedYear: event.target.value});
-//	}
-
-	goToMonth() {
-//		this.props.goToMonth(this.state.selectedMonth, this.state.selectedYear)
-		this.props.toggleMonthDropdownModal()
-	}
-
-	componentWillReceiveProps(nextProps) {
-		this.setState({
-			selectedMonth: nextProps.currentMonth, 
-			selectedYear: nextProps.currentYear
-		})
-	}
-
-	render() {
-		return (
-			<div style={{display: (this.props.show === true) ? 'block' : 'none'}} >
-				<div style={styles.backdrop} onClick={this.props.toggleThisShow}>
-                  <div style={styles.modal} >
-					<h4>Jump to:</h4>
-				</div>  
-                </div>
-
-				
-			</div>
-		)
-	}
-}
-
 const styles = {
 	backdrop: {
 		background: '#000',
@@ -58,40 +10,172 @@ const styles = {
 		position: 'fixed',
 		top: 0,
 		width: '100%',
-		zIndex: '998'
+		zIndex: '998',
+        cursor: 'default',
+        display: 'flex',
+        justifyContent: 'center',
 	},
-    
-	modal: {
-		background: '#FFF',
-		color: '#232323',
-		left: '50%',
-		padding: '10px 30px 20px',
-		position: 'absolute',
-		top: '50%',
-		transform: 'translate(-50%, -50%)',
+
+    modal: {
+        padding: '10px 10px 20px 60px',
+        background: '#FFF',
+		position: 'fixed',
+		top: '-20px',
+        height: '100%',
 		width: '300px',
-		zIndex: '999'
-	},
+		zIndex: '999',
+        overflowY: 'scroll',
+        overflowX: 'hidden',
+        cursor: 'default',
+    },
+
+    textArea: {
+        borderTop: '1px solid #9b9b9b',
+    },
+
+    buttonClose: {
+        margin: '0 auto',
+        width: '100px',
+        height: '25px',
+        borderRadius: '5px',
+        display: 'block',
+        cursor: 'pointer',
+    },
+
+    overflowField: {
+        display: 'block',
+        overflow: 'auto',
+        height: '50px',
+    },
+};
+
+class Review extends Component {
+	constructor(props) {
+		super(props);
+        this.checkTaskTemplate = this.checkTaskTemplate.bind(this);
+        this.checkWebinarTemplate = this.checkWebinarTemplate.bind(this);
+        this.checkEventTemplate = this.checkEventTemplate.bind(this);
+        this.transformDuration = this.transformDuration.bind(this);
+	}
     
-	dropdown: {
-		background: '#FFF',
-		border: '1px solid #232323',
-		borderRadius: '3px',
-		color: '#232323',
-		margin: '5px',
-		padding: '10px'
-	},
+    transformDuration() {
+        if (this.props.duration) {
+            const date = new Date(this.props.duration);
+            const h = date.getHours();
+            const m = date.getMinutes();
+            const s = date.getSeconds();
+            return <h4> Duration: {h}h {m}m </h4>
+        }
+    }
+
+    checkLocation() {
+        if (this.props.location) {
+            return <h4>Location: {this.props.location}</h4>
+        }
+    }
     
-	button: {
-		border: '1px solid ' + basicColors.mainColor,
-		borderRadius: '3px',
-		background: 'transparent',
-		color: basicColors.mainColor,
-		cursor: 'pointer',
-		display: 'block',
-		margin: '30px auto',
-		padding: '10px 15px',
-		width: '50%'
+    stopBubbling(event) {
+        event.stopPropagation();
+    }
+    
+    makeSpeakers() {
+        if (this.props.webinarTemplate) {
+            let speakersSet = [];
+            let arr3 = this.props.trainers.filter(function(item) {
+                return this[item.id];
+            },
+            this.props.speakers.reduce(function (obj, item) {
+                return obj[item] = 1, obj;
+            }, {}));
+            arr3.map((item,i) => {
+                speakersSet.push(
+                    <div key={i}>
+                        <p>{item.name}</p>
+                        <p key={i} style={styles.overflowField}>{item.avatar}</p>
+                    </div>
+                )
+            })
+            return speakersSet;
+        }
+    }
+    
+    checkTaskTemplate() {
+        if (this.props.taskTemplate) {
+            return (
+                <div className='my-map'>
+                    <h4>Name: {this.props.taskTitle}</h4>
+                    <h4 style={styles.overflowField}>Description: {this.props.description}</h4>
+                    <h4>The person checks: {this.props.whoChecks}</h4>
+                    <h4>Uploading place: {this.props.upload}</h4>
+                    <h4>Criteria for evaluation: {this.props.criteria}</h4>
+                    <h4>Deadline: {this.props.deadline}</h4>
+                    <form action="" method="post">
+                        <p><b>Your comment:</b></p>
+                        <p><textarea rows="10" cols="35" name="text" style={styles.textArea}></textarea></p>
+                        <p><input type="submit" value="Surprise us"/></p>
+                    </form>
+                    <button type="button" style={styles.buttonClose} onClick={this.props.toggleThisShow}>Close</button>
+                </div>
+            );
+        }
+    }
+
+    checkWebinarTemplate() {
+        if (this.props.webinarTemplate) {
+            return (
+                <div>
+                    <h4>Name: {this.props.taskTitle}</h4>
+                    <h4>Time: {this.props.time}</h4>
+                    {this.checkLocation()}
+                    <h4>Video: {this.props.video}</h4>
+                    <h4>Slides: {this.props.slides}</h4>
+                    <h4>Plan: {this.props.plan}</h4>
+                    <h4>Speakers: {this.makeSpeakers()}</h4>
+                    {this.transformDuration()}
+                    <form action="" method="post">
+                        <p><b>Your comment:</b></p>
+                        <p><textarea rows="10" cols="35" name="text" style={styles.textArea}></textarea></p>
+                        <p><input type="submit" value="Surprise us"/></p>
+                    </form>
+                    <button type="button" style={styles.buttonClose} onClick={this.props.toggleThisShow}>Close</button>
+                </div>
+            )
+        }
+    }
+
+    checkEventTemplate() {
+        if (this.props.eventTemplate) {
+            return (
+                <div>
+                    <h4><span style={styles.text}>name:</span>{this.props.taskTitle}</h4>
+                    <h4 style={styles.overflowField}>Description:{this.props.description}</h4>
+                    <h4>Time: {this.props.time}</h4>
+                    {this.checkLocation()}
+                    <h4>Plan: {this.props.plan}</h4>
+                    {this.transformDuration()}
+                    <form action="" method="post">
+                        <p><b>Your comment:</b></p>
+                        <p><textarea rows="10" cols="35" name="text" style={styles.textArea}></textarea></p>
+                        <p><input type="submit" value="Surprise us"/></p>
+                    </form>
+                    <button type="button" style={styles.buttonClose} onClick={this.props.toggleThisShow}>Close</button>
+                </div>
+            )
+        }
+    }
+    
+	render() {
+		return (
+			<div style={{display: (this.props.show === true) ? 'block' : 'none'}}>
+				<div style={styles.backdrop} onClick={this.props.toggleThisShow}>
+                    <div style={styles.modal} className='modal-box' onClick={this.stopBubbling}>
+                        {this.checkTaskTemplate()}
+                        {this.checkWebinarTemplate()}
+                        {this.checkEventTemplate()}
+                    </div>
+                </div>
+			</div>
+		);
 	}
 }
 

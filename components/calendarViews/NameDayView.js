@@ -5,11 +5,11 @@ import { days } from '../data/timeData';
 const NameDayView = (props) => {
 	let style = Object.assign({}, styles.basic, (props.day === 6) ? styles.rightDay : {});
 	return (
-		<div style = {style}>
+		<div style={style}>
 			{days[props.day]}
 		</div>
-	)
-}
+	);
+};
 
 const styles = {
 	basic: {
@@ -25,16 +25,16 @@ const styles = {
 		overflow: 'hidden',
 		padding: '5px 0',
 		textAlign: 'center',
-		width: 100/7 + '%'
+		width: 100/7 + '%',
 	},
-    
+
 	holiday: {
-		color: basicColors.holidayColor
+		color: basicColors.holidayColor,
 	},
-    
+
     rightDay: {
-        borderRight: '1px solid ' + basicColors.mainColor
-    }
-}
+        borderRight: '1px solid ' + basicColors.mainColor,
+    },
+};
 
 export default NameDayView;
