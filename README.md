@@ -1,7 +1,7 @@
 # Calendar - React native with backend data
 
 # Promo
-    - http://gatekeeper-hum-34067.bitballoon.com/
+    [Live version](http://gatekeeper-hum-34067.bitballoon.com/)
 
 # Install
  - npm i
