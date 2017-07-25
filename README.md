@@ -1,12 +1,9 @@
 # Calendar - React native with backend data
 
-# Promo
-<<<<<<< HEAD
-    [Live version](http://calendar-react.bitballoon.com/)
     
 # Part 1
 
-# Tech stack
+### Tech stack
  * React
  * Webpack
  * Airbnb styleguide + lint
@@ -58,11 +55,11 @@
     http://gatekeeper-hum-34067.bitballoon.com/
 >>>>>>> a498117b206de33d7bc9f200d8aba09915f70e81
 
-# Install
+### Install
  - npm i
  - webpack-dev-server --progress --colors
  
-# Part II (DRAFT)
+### Part II (DRAFT)
 
 Суть задания - дороботка предыдушей версии RS Calendar
 
