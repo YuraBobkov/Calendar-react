@@ -1,7 +1,7 @@
-# Calendar - React native with backend data
+### Calendar - React native with backend data
 
     
-# Part 1
+### Part 1
 
 ### Tech stack
  * React
