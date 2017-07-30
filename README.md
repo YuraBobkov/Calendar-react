@@ -1,4 +1,4 @@
-### Calendar - React native with backend data (in progress)
+### Calendar - React with backend data
 
     
 ### Part 1
