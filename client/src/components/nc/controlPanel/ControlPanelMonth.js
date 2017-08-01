@@ -22,12 +22,12 @@ const styles = {
     monthDropdown: {
 		color: basicColors.mainColor,
 		cursor: 'pointer',
-		padding: '10px 10px',
+		padding: '6px',
 		textAlign: 'center',
 		width: '150px',
         border: '1px solid' + basicColors.mainColor,
         borderRadius: '20px',
-        height: '20px',
+        height: '40px',
         margin: '0 10px',
 	}
 };

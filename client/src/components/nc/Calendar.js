@@ -197,7 +197,4 @@ class Calendar extends Component {
     }
 }
 
-ReactDOM.render(
-    <Calendar />,
-    document.querySelector('#app')
-);
+export default Calendar;
